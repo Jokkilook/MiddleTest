@@ -16,6 +16,15 @@ class Controller {
     private val userList = mutableListOf<UserDto>()
     private val lottoNumList = mutableListOf<LottoDto>()
 
+    @PostMapping("/lotto")
+    fun uploadNum(
+        @RequestBody @Valid intputLotto: LottoDto
+    ): ResponseEntity<LottoDto> {
+        lottoNumList.add(intputLotto)
+        var response = intputLotto
+
+        return ResponseEntity.ok().body(response)
+    }
 }
 
 
