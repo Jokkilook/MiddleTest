@@ -25,6 +25,25 @@ class Controller {
         return ResponseEntity.ok().body(user)
     }
 
+    @PostMapping("/user/login")
+    fun login(
+        @RequestBody @Valid UserRequestDto:UserRequestDto
+    ): ResponseEntity<UserDto> {
+
+        var response:UserDto? = null
+
+        val user = userList.firstOrNull() {it.email==UserRequestDto.email}
+        if(user!= null&&user.password==UserRequestDto.password){
+            response = user
+        }
+
+        return if (response != null) {
+            ResponseEntity.ok().body(response)
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
 }
 
 
