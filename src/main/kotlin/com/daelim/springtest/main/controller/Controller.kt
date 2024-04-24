@@ -76,6 +76,58 @@ class Controller {
 
         return ResponseEntity.ok().body(response)
     }
+}
+
+    @PostMapping("/user/login")
+    fun login(
+        @RequestBody @Valid UserRequestDto:UserRequestDto
+    ): ResponseEntity<UserDto> {
+
+        var response:UserDto? = null
+
+        val user = userList.firstOrNull() {it.email==UserRequestDto.email}
+        if(user!= null&&user.password==UserRequestDto.password){
+            response = user
+        }
+
+        return if (response != null) {
+            ResponseEntity.ok().body(response)
+        } else {
+            ResponseEntity.notFound().build()
+        }
+    }
+
+    @GetMapping("/lotto")
+    fun getLotto(): ResponseEntity<LottoDto> {
+        var resultList = mutableListOf<Array<Int>>()
+
+        for(n:Int in 1..5) {
+            val numList = mutableListOf<Int>()
+            for (i: Int in 1..45) {
+                numList.add(i)
+            }
+            numList.shuffle()
+            var array = arrayOf(numList[0], numList[1], numList[2], numList[3], numList[4], numList[5], numList[6])
+            array.sort()
+            resultList.add(array)
+        }
+
+
+        var response = LottoDto(numbers = resultList)
+
+
+        return ResponseEntity.ok().body(response)
+    }
+
+    @PostMapping("/lotto")
+    fun uploadNum(
+        @RequestBody @Valid intputLotto: LottoDto
+    ): ResponseEntity<LottoDto> {
+        lottoNumList.add(intputLotto)
+        var response = intputLotto
+
+        return ResponseEntity.ok().body(response)
+    }
 
 //    @GetMapping("/lotto/check")
 //    fun lottoCheck(): ResponseEntity<List<LottoResultResponseDto>> {
