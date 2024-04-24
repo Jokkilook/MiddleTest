@@ -15,6 +15,15 @@ import java.util.*
 class Controller {
     private val userList = mutableListOf<UserDto>()
     private val lottoNumList = mutableListOf<LottoDto>()
+    @PostMapping("/user/create")
+    fun createUser(
+        @RequestBody @Valid userDto: UserDto
+    ): ResponseEntity<UserDto> {
+        val user = userDto
+        userList.add(user)
+
+        return ResponseEntity.ok().body(user)
+    }
 
 }
 
