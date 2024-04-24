@@ -66,6 +66,15 @@ class Controller {
         return ResponseEntity.ok().body(response)
     }
 
+    @PostMapping("/lotto")
+    fun uploadNum(
+        @RequestBody @Valid intputLotto: LottoDto
+    ): ResponseEntity<LottoDto> {
+        lottoNumList.add(intputLotto)
+        var response = intputLotto
+
+        return ResponseEntity.ok().body(response)
+    }
 }
 
 
