@@ -12,7 +12,7 @@ data class LottoResult(
 
 data class  LottoResultRequestDto(
     val numbers:MutableList<Int>,
-    val bonusNumber:Int,
+    val bonusNumber:Int?,
 )
 
 data class LottoResultResponseDto(
